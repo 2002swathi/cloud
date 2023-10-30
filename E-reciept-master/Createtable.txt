@@ -1,0 +1,29 @@
+// Check if the browser supports the Web Speech API
+if ('speechSynthesis' in window) {
+    const inputWord = document.getElementById('inputWord');
+    const pronounceButton = document.getElementById('pronounceButton');
+
+    // Create a function to pronounce each letter
+    function pronounceLetter(letter) {
+        let speech = new SpeechSynthesisUtterance();
+        speech.lang = 'ta-IN'; // Set the language to Hindi (hi-IN)
+        speech.text = letter; // Set the text to the individual letter
+        window.speechSynthesis.speak(speech);
+    }
+
+    // Add an event listener to the button
+    pronounceButton.addEventListener('click', function() {
+        const hindiWord = inputWord.value.trim();
+
+        if (hindiWord !== '') {
+            for (let i = 0; i < hindiWord.length; i++) {
+                let letter = hindiWord.charAt(i);
+                pronounceLetter(letter);
+            }
+        } else {
+            alert('Please enter a Hindi word.');
+        }
+    });
+} else {
+    alert("Speech synthesis not supported in this browser.");
+}
